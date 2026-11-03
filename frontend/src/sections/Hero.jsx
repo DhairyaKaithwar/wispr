@@ -1,4 +1,5 @@
 import { Placeholder } from "@/components/Placeholder";
+import { PillButton, Eyebrow } from "@/components/Soft";
 
 const links = [
   { label: "Resume", id: "resume", note: "resume link" },
@@ -8,18 +9,17 @@ const links = [
 ];
 
 export const Hero = () => (
-  <section data-testid="hero-section" className="section min-h-[100svh] flex flex-col justify-center">
-    <h1 data-reveal data-testid="hero-name" className="text-4xl sm:text-5xl lg:text-6xl font-medium">
+  <section data-testid="hero-section" className="section min-h-[100dvh] flex flex-col justify-center">
+    <div><Eyebrow testId="hero-eyebrow" /></div>
+    <h1 data-reveal data-testid="hero-name" className="hero-title mt-8">
       Dhairya
     </h1>
-    <p data-reveal data-testid="hero-positioning" className="mt-6 text-measure text-base md:text-lg muted">
+    <p data-reveal data-testid="hero-positioning" className="mt-8 text-measure text-base md:text-lg muted">
       <Placeholder>one-line positioning</Placeholder>
     </p>
     <div data-reveal className="mt-12 flex flex-wrap gap-4">
       {links.map((l) => (
-        <a key={l.id} href="#" data-testid={`hero-${l.id}-btn`} title={`Placeholder: ${l.note}`} className="btn">
-          {l.label}
-        </a>
+        <PillButton key={l.id} href="#" label={l.label} testId={`hero-${l.id}-btn`} title={`Placeholder: ${l.note}`} />
       ))}
     </div>
   </section>
