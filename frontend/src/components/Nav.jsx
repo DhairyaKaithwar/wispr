@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 const links = [
-  { label: "Experience", href: "/#experience", id: "experience" },
+  { label: "My story", href: "/#timeline", id: "my-story" },
   { label: "Museum of Failures", href: "/#museum", id: "museum" },
-  { label: "Whisper", href: "/whisper", id: "whisper" },
+  { label: "Skills", href: "/#skills", id: "skills" },
+  { label: "Contact", href: "/#contact", id: "contact" },
 ];
 
 export const Nav = () => {

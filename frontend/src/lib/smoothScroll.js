@@ -12,7 +12,7 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 export const useSmoothScroll = () => {
   useEffect(() => {
     if (reducedMotion()) return;
-    const lenis = new Lenis({ anchors: true });
+    const lenis = new Lenis({ anchors: { offset: -24 } });
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);

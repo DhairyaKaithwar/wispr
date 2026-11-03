@@ -4,6 +4,7 @@
   --text: #1A1A1A;
   --muted: #666666;
   --shell: rgba(26, 26, 26, 0.05);
+  --line: rgba(26, 26, 26, 0.12);
   --overlay: rgba(255, 255, 235, 0.8);
   --lavender: #F0D7FF;
   --green: #034F46;
@@ -20,6 +21,7 @@
   --text: #FFFFEB;
   --muted: #A8A89A;
   --shell: rgba(255, 255, 235, 0.05);
+  --line: rgba(255, 255, 235, 0.12);
   --overlay: rgba(20, 20, 18, 0.8);
 }
 
@@ -45,8 +47,10 @@ h1, h2, h3 {
 .section {
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 96px 16px;
+  padding: 128px 16px 96px;
 }
+
+[id] { scroll-margin-top: 24px; }
 
 @media (min-width: 768px) {
   .section { padding: 160px 24px; }
@@ -111,25 +115,20 @@ h1, h2, h3 {
 .pill:hover .pill-icon { transform: translate(4px, -1px) scale(1.05); }
 
 .bezel {
-  padding: 6px;
   border-radius: 2rem;
-  background: var(--shell);
-  box-shadow: 0 0 0 1px var(--shell);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
 }
 
 .bezel-core {
   height: 100%;
   padding: 40px;
-  border-radius: calc(2rem - 6px);
-  background: var(--card);
-  color: var(--text);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 
 .panel-green {
   background: var(--green);
   color: var(--cream);
-  --shell: rgba(255, 255, 235, 0.08);
 }
 
 .panel-green > .section .eyebrow { color: var(--cream); }
