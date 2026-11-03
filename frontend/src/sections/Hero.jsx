@@ -39,8 +39,8 @@ export const Hero = ({ ready }) => {
             ))}
           </div>
         </div>
-        <h1 data-hero-title data-testid="hero-title" className="hero-title" style={{ visibility: ready ? "visible" : "hidden" }}>
-          Portfolio
+        <h1 data-testid="hero-title" className="hero-title" style={{ visibility: ready ? "visible" : "hidden" }}>
+          <span data-hero-title className="inline-block">Portfolio<span className="title-dot" aria-hidden="true" /></span>
         </h1>
       </div>
     </section>

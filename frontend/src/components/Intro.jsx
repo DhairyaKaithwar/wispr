@@ -1,65 +1,73 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { CustomEase } from "gsap/CustomEase";
 
 const NAME = "Dhairya";
 const WORD = "Portfolio";
 const CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const BARS = [0.35, 0.7, 0.5, 1, 0.65, 0.85, 0.4];
+const T = { dot: 1.25, fall: 1.85, morph: 3.55, settle: 5.05 };
 
-const flipTo = (word) => {
+gsap.registerPlugin(CustomEase);
+CustomEase.create("land", "M0,0 C0.25,0 0.38,0.62 0.48,1 0.56,0.9 0.66,0.88 0.76,1 0.84,0.97 0.92,0.97 1,1");
+
+const centerOf = (el) => {
+  const r = el.getBoundingClientRect();
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
+};
+
+const flipTo = (row) => {
   const hero = document.querySelector("[data-hero-title]");
   const hr = hero.getBoundingClientRect();
-  const wr = word.getBoundingClientRect();
-  const scale = parseFloat(getComputedStyle(hero).fontSize) / parseFloat(getComputedStyle(word).fontSize);
-  return { x: hr.left - wr.left, y: hr.top - wr.top, scale, color: getComputedStyle(hero).color };
+  const wr = row.getBoundingClientRect();
+  return {
+    x: gsap.getProperty(row, "x") + hr.left - wr.left,
+    y: gsap.getProperty(row, "y") + hr.top - wr.top,
+    scale: hr.width / row.offsetWidth,
+    color: getComputedStyle(hero).color,
+  };
 };
 
 const buildTimeline = (el, finish) => {
   const q = gsap.utils.selector(el);
   const letters = q(".intro-letter");
-  const pill = q(".intro-pill")[0];
-  const word = q(".intro-word")[0];
-  const pr = pill.getBoundingClientRect();
+  const [pill, row, dot] = [q(".intro-pill")[0], q(".intro-word")[0], q(".intro-dot")[0]];
+  const recenter = (d = 0.3) => gsap.to(row, { x: -row.offsetWidth / 2, duration: d, ease: "soft", overwrite: "auto" });
+  gsap.set(row, { x: -row.offsetWidth / 2, y: -row.offsetHeight / 2 });
+  gsap.set(dot, { opacity: 0 });
   const t = gsap.timeline({ onComplete: finish });
 
   gsap.to(q(".intro-bar"), { scaleY: 0.2, duration: 0.32, ease: "sine.inOut", repeat: -1, yoyo: true, stagger: { each: 0.06, from: "center" } });
-  t.from(pill, { scale: 0.8, opacity: 0, duration: 0.5, ease: "soft" });
-  t.to(pill, { scale: 1.06, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0.3);
+  t.from(pill, { scale: 0.6, opacity: 0, duration: 0.6, ease: "soft" }, 0.15);
+  t.to(q(".intro-bar"), { opacity: 0, duration: 0.2 }, T.dot);
+  t.to(pill, {
+    width: () => centerOf(dot).w, height: () => centerOf(dot).h, padding: 0, backgroundColor: "#FFA946", borderColor: "#FFA946",
+    x: () => centerOf(dot).x - centerOf(pill).x, y: () => centerOf(dot).y - centerOf(pill).y,
+    duration: 0.55, ease: "soft",
+  }, T.dot + 0.05);
+  t.set(dot, { opacity: 1 }, T.dot + 0.6);
+  t.set(pill, { opacity: 0 }, T.dot + 0.6);
+
   letters.slice(0, NAME.length).forEach((l, i) => {
-    const r = l.getBoundingClientRect();
-    t.from(l, {
-      x: pr.left + pr.width / 2 - (r.left + r.width / 2),
-      y: pr.top + pr.height / 2 - (r.top + r.height / 2),
-      rotate: gsap.utils.random(-25, 25),
-      scale: 0.15,
-      opacity: 0,
-      duration: 0.6,
-      ease: "back.out(1.7)",
-    }, 0.6 + i * 0.08);
+    t.from(l, { y: -window.innerHeight * 0.7, duration: 0.85, ease: "land" }, T.fall + i * 0.17);
+    t.from(l, { rotation: gsap.utils.random(-140, 140), duration: 0.85, ease: "power3.out" }, T.fall + i * 0.17);
   });
-  t.to(pill, { y: -12, scale: 0.7, opacity: 0, duration: 0.4, ease: "soft" }, 1.4);
+
   WORD.split("").forEach((ch, i) => {
     const l = letters[i];
-    const o = { v: 0 };
-    t.to(o, {
-      v: 1,
-      duration: 0.26,
-      ease: "none",
-      onStart: () => gsap.set(l, { opacity: 1 }),
-      onUpdate: () => { l.textContent = CHARS[Math.floor(Math.random() * CHARS.length)]; },
-      onComplete: () => { l.textContent = ch; },
-    }, 1.7 + i * 0.08);
+    const at = T.morph + i * 0.15;
+    t.call(() => { l.textContent = CHARS[Math.floor(Math.random() * CHARS.length)]; }, null, at);
+    t.call(() => { l.textContent = CHARS[Math.floor(Math.random() * CHARS.length)]; }, null, at + 0.05);
+    t.call(() => { l.textContent = ch; recenter(); }, null, at + 0.1);
+    t.fromTo(l, { y: -10, opacity: 0.4 }, { y: 0, opacity: 1, duration: 0.3, ease: "soft", immediateRender: false }, at);
   });
-  t.to(q(".intro-skip")[0], { opacity: 0, duration: 0.3 }, 2.65);
-  t.to(q(".intro-bg")[0], { clipPath: "inset(0% 0% 100% 0%)", duration: 0.85, ease: "soft" }, 2.65);
-  t.to(word, {
-    x: () => flipTo(word).x,
-    y: () => flipTo(word).y,
-    scale: () => flipTo(word).scale,
-    color: () => flipTo(word).color,
-    duration: 0.85,
-    ease: "soft",
-  }, 2.65);
+
+  t.to(q(".intro-skip")[0], { opacity: 0, duration: 0.3 }, T.settle);
+  t.to(q(".intro-bg")[0], { clipPath: "inset(0% 0% 100% 0%)", duration: 0.95, ease: "soft" }, T.settle);
+  t.to(row, {
+    x: () => flipTo(row).x, y: () => flipTo(row).y, scale: () => flipTo(row).scale, color: () => flipTo(row).color,
+    duration: 0.95, ease: "soft",
+  }, T.settle);
   return t;
 };
 
@@ -102,15 +110,14 @@ export const Intro = ({ onDone }) => {
     <div ref={root} data-testid="intro-overlay" className="intro">
       <div className="intro-bg" aria-hidden="true" />
       <div className="intro-stage" aria-hidden="true">
-        <div className="intro-pill" data-testid="intro-pill">
-          {BARS.map((b, i) => <span key={i} className="intro-bar" style={{ height: `${b * 18}px` }} />)}
-        </div>
         <div className="intro-word" data-testid="intro-word">
           {WORD.split("").map((_, i) => (
-            <span key={i} className="intro-letter" style={i >= NAME.length ? { opacity: 0 } : undefined}>
-              {NAME[i] || ""}
-            </span>
+            <span key={i} className="intro-letter">{NAME[i] || ""}</span>
           ))}
+          <span className="intro-dot title-dot" />
+        </div>
+        <div className="intro-pill" data-testid="intro-pill">
+          {BARS.map((b, i) => <span key={i} className="intro-bar" style={{ height: `${b * 18}px` }} />)}
         </div>
       </div>
       <button type="button" onClick={skip} data-testid="intro-skip-btn" className="intro-skip">Skip</button>

@@ -41,7 +41,7 @@ const buildDots = (img, w, h, titleTop) => {
       const blue = smooth(0.07, 0.13, (px[k + 2] - px[k]) / 255);
       const r = (L.cell / 2) * 1.08 * smooth(0.3, 0.92, 1 - lum) * weight * (1 - blue);
       if (r < 0.35) continue;
-      dots.push({ x, y, r, d: (dist / L.r1) * 0.55 + Math.random() * 0.12 });
+      dots.push({ x, y, r, d: (dist / L.r1) * 0.22 + Math.random() * 0.3, ox: Math.random() * w, oy: Math.random() * h });
     }
   }
   return dots;
@@ -58,14 +58,18 @@ export const Halftone = ({ play }) => {
     st.draw = () => {
       const { width: w, height: h } = canvas;
       ctx.clearRect(0, 0, w, h);
+      if (!st.played) return;
       ctx.fillStyle = getComputedStyle(canvas).color;
       ctx.beginPath();
       for (const dt of st.dots) {
-        const t = Math.min(1, Math.max(0, (st.p - dt.d) / 0.33));
-        const rr = dt.r * (1 - Math.pow(1 - t, 3));
+        const t = Math.min(1, Math.max(0, (st.p - dt.d) / 0.48));
+        const e = 1 - Math.pow(1 - t, 4);
+        const x = dt.ox + (dt.x - dt.ox) * e;
+        const y = dt.oy + (dt.y - dt.oy) * e;
+        const rr = 0.55 + (dt.r - 0.55) * e;
         if (rr < 0.3) continue;
-        ctx.moveTo(dt.x + rr, dt.y);
-        ctx.arc(dt.x, dt.y, rr, 0, Math.PI * 2);
+        ctx.moveTo(x + rr, y);
+        ctx.arc(x, y, rr, 0, Math.PI * 2);
       }
       ctx.fill();
     };
@@ -104,7 +108,7 @@ export const Halftone = ({ play }) => {
         st.p = 1;
         return st.draw();
       }
-      gsap.to(st, { p: 1, duration: 2, ease: "none", onUpdate: st.draw });
+      gsap.fromTo(st, { p: 0 }, { p: 1, duration: 2.6, ease: "none", onUpdate: st.draw });
     };
     if (st.img) st.start();
   }, [play]);
