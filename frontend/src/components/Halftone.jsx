@@ -96,7 +96,12 @@ export const Halftone = ({ play }) => {
     };
     const onResize = () => st.img && canvas.clientWidth !== st.w && build();
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const onTheme = () => st.draw();
+    window.addEventListener("themechange", onTheme);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("themechange", onTheme);
+    };
   }, []);
 
   useEffect(() => {

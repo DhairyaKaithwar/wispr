@@ -456,6 +456,57 @@ html.lenis, html.lenis body { height: auto; }
 .roller-strip { display: flex; flex-direction: column; }
 .roller-strip > span { display: block; height: 1em; }
 
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 400ms; animation-timing-function: ease; }
+
+.theme-fade, .theme-fade * {
+  transition: background-color 400ms ease, color 400ms ease, border-color 400ms ease !important;
+}
+
+.cord {
+  position: fixed;
+  top: 0;
+  right: 32px;
+  z-index: 45;
+  width: 32px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+  cursor: grab;
+}
+
+.cord:active { cursor: grabbing; }
+.cord-inner { display: flex; flex-direction: column; align-items: center; will-change: transform; }
+
+.cord-line {
+  display: block;
+  width: 1px;
+  height: 96px;
+  background: var(--text);
+  opacity: 0.55;
+}
+
+.cord-knob {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin-top: -1px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--line);
+  transition: transform 300ms var(--ease);
+}
+
+.cord:hover .cord-knob { transform: scale(1.15); }
+.cord:focus-visible { outline: none; }
+.cord:focus-visible .cord-knob { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--text); }
+
+@media (max-width: 767px) {
+  .cord { right: 16px; }
+  .cord-line { height: 64px; }
+}
+
 @media (min-width: 768px) {
   .timeline-inner {
     display: grid;

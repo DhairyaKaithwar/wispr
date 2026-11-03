@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import Whisper from "@/pages/Whisper";
 import Story from "@/pages/Story";
 import { Nav } from "@/components/Nav";
+import { ThemeCord } from "@/components/ThemeCord";
 import { useSmoothScroll } from "@/lib/smoothScroll";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <BrowserRouter>
       <div className="grain" aria-hidden="true" />
       <Nav />
+      <ThemeCord />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/whisper" element={<Whisper />} />
