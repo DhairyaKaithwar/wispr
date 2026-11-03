@@ -22,7 +22,7 @@ export const MuseumOfFailures = () => (
               ))}
             </dl>
             <div className="mt-8">
-              <PillButton href="#" label="Read the full story" testId={`museum-exhibit-${i + 1}-story-btn`} title="Placeholder: full story link" />
+              <PillButton href={`/museum-of-failures/${i + 1}`} label="Read the full story" testId={`museum-exhibit-${i + 1}-story-btn`} />
             </div>
           </Bezel>
         ))}
