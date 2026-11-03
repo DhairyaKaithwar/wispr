@@ -72,6 +72,17 @@ h1, h2, h3 {
 
 .text-measure { max-width: var(--text-width); }
 
+.video-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  max-width: 960px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
 .role-box {
   padding: 24px;
   border-radius: 16px;
