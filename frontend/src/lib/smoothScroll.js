@@ -28,7 +28,7 @@ export const useSmoothScroll = () => {
 
 export const useCountUp = (ref) => {
   useEffect(() => {
-    if (reducedMotion()) return;
+    if (reducedMotion() || !ref.current) return;
     const els = ref.current.querySelectorAll("[data-count]");
     const tweens = [];
     const io = new IntersectionObserver((entries) => {

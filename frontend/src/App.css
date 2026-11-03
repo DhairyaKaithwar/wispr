@@ -305,6 +305,7 @@ h1, h2, h3 {
 }
 
 @media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .museum-progress { display: none; }
   .museum-panel { height: auto; overflow: visible; }
   .museum-track { flex-wrap: wrap; width: auto; }
 }

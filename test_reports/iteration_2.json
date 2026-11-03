@@ -1,0 +1,29 @@
+{
+  "summary": "Frontend-only test of count-up, hover colours, reduced motion and regressions. Passed: 7 .count[data-count] spans on home (Timeline 3,000+/18, AIR 18; Museum ex1/ex3 3,000+, ex3 99.8%; Achievements AIR 18). Each one counts up from 0 when it scrolls into view (e.g. 885+ → 2,973+ → 3,000+; AIR 3 → 18) and ends on exactly the original text. Surrounding words are unchanged ('~99.8% fewer records…', 'AIR 18 in CUET PG DU MCA'), and 'React 18' in Skills is correctly left alone. At 1920x900, museum exhibit 3's 99.8% starts counting (3.9% → 99.8%) only once it is on screen (x=1482, y=849). Story pages 3 (99.8%) and 4 (18) count up on scroll; stories 1 and 2 contain no matching numbers. Hover: hero pills (Resume/LinkedIn/GitHub/Email) and museum 'Read the full story' go from rgb(240,215,255) to rgb(232,198,255) with transform none, box-shadow none, and the arrow does not move. Museum .bezel goes from rgb(228,228,208) to slightly darker (~rgb(214,214,196)) with an identity transform and no shadow. Reduced motion: no intro, hero visible, halftone drawn (61,738 px), no .pin-spacer, no Lenis, roller reads 2025 immediately, all 21 [data-reveal] at opacity 1, numbers show final text, museum cards wrap in a grid, story 3 shows 99.8% straight away. Regression: intro plus Skip works, theme cord toggles the dark class on and off, timeline is pinned with rolling years (2025 → 2023 → 2020), museum horizontal pin works and progress reaches 04/04, mobile 390x844 has no pinning, a column track and no horizontal overflow. There were no console errors on valid routes. One bug: an invalid story id crashes the page.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Story.jsx (/museum-of-failures/99 or any invalid id)", "issue": "Runtime crash 'Cannot read properties of null (reading querySelectorAll)'. useCountUp runs its effect while the page renders <Navigate> instead of <main>, so ref.current is null. The Emergent error overlay appears instead of the redirect to home.", "selector": "[data-testid^=story-page-]", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Museum (reduced motion, desktop)", "issues": ["The progress indicator '01 / 04' and its empty bar still show even though there is no horizontal scroll, so they never update. Hide .museum-progress under prefers-reduced-motion."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Fix the Story.jsx crash on invalid ids. Either guard useCountUp (if (!ref.current) return;) or do the story lookup and return <Navigate> before calling the hook's consumer, e.g. split it into a <StoryContent> component.",
+    "Optional: hide .museum-progress when prefers-reduced-motion is set."
+  ],
+  "critical_code_review_comments": [
+    "useCountUp: no null guard on ref.current, which is the root cause of the crash above.",
+    "useCountUp/useReveal in Story.jsx depend on [ref] only. If you navigate from one story to another without a remount (same route component, id changes), the new story's .count spans are never observed. Add id to the deps or key the page by id.",
+    "useCountUp cleanup writes el.textContent on React-managed nodes. This is fine for static text but fragile if the content becomes dynamic."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "95%"},
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Use page.emulate_media(reduced_motion='reduce') and reload to test reduced motion. Use a MutationObserver on .count spans to log count-up frames. To get the museum pin start, take the .pin-spacer that is the closest ancestor of [data-testid=museum-section] and read its top. At 1920 wide, exhibit 3 is already partly in view when the pin starts. /museum-of-failures/99 crashes; retest after the fix."
+}
