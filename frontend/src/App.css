@@ -230,17 +230,6 @@ h1, h2, h3 {
 }
 .muted { color: var(--muted); }
 
-.eyebrow {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 999px;
-  border: 1px dashed var(--accent);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
 
 .pill {
   display: inline-flex;
@@ -268,49 +257,15 @@ h1, h2, h3 {
   background: rgba(26, 26, 26, 0.06);
 }
 
-.bezel {
-  border-radius: 2rem;
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--text);
-  transition: background-color 300ms var(--ease);
-}
 
-.bezel:hover { background: color-mix(in srgb, var(--card) 94%, #000); }
 
-.bezel-core {
-  height: 100%;
-  padding: 40px;
-}
 
 .panel-green {
   background: var(--green);
   color: var(--cream);
 }
 
-.museum-viewport { margin-top: 48px; }
-.museum-track { display: flex; flex-direction: column; gap: 24px; }
-.museum-progress { display: none; }
 
-@media (min-width: 768px) {
-  .museum-panel { height: 100vh; overflow: hidden; }
-  .museum-inner { height: 100%; display: flex; flex-direction: column; justify-content: center; padding-top: 96px; padding-bottom: 48px; }
-  .museum-viewport { margin-top: 40px; overflow: visible; }
-  .museum-track { flex-direction: row; width: max-content; will-change: transform; }
-  .museum-track .exhibit { width: min(520px, 42vw); flex-shrink: 0; }
-  .museum-progress { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; padding-bottom: 12px; }
-  .museum-count { font-size: 13px; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; opacity: 0.8; }
-  .museum-bar { display: block; width: 160px; height: 2px; border-radius: 2px; background: rgba(255, 255, 235, 0.2); overflow: hidden; }
-  .museum-bar-fill { display: block; height: 100%; background: var(--accent); transform-origin: left center; transform: scaleX(0); }
-}
-
-@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
-  .museum-progress { display: none; }
-  .museum-panel { height: auto; overflow: visible; }
-  .museum-track { flex-wrap: wrap; width: auto; }
-}
-
-.panel-green > .section .eyebrow { color: var(--cream); }
 
 .nav-island {
   position: fixed;

@@ -1,0 +1,283 @@
+/* Creative pass: type, hero, timeline, doors, skills, stats, contact */
+
+body { font-size: 17px; }
+@media (min-width: 768px) { body { font-size: 18px; } }
+
+.secondary { color: color-mix(in srgb, var(--text) 78%, transparent); }
+
+.section-title {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Hero */
+.hero { position: relative; min-height: 100dvh; overflow: hidden; }
+.hero-visual { position: relative; height: 54svh; overflow: hidden; }
+.hero-visual .halftone { z-index: 1; }
+
+.hero-word {
+  position: absolute;
+  left: -0.03em;
+  bottom: 2%;
+  z-index: 0;
+  font-family: "EB Garamond", serif;
+  font-size: 9.5rem;
+  font-weight: 500;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: var(--card);
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: block;
+  min-height: 0;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 8px 16px 72px;
+}
+
+.hero-copy { max-width: 600px; }
+
+.hero-greeting {
+  font-size: clamp(2.5rem, 4.1vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.role-wrap { display: block; margin-top: 0.35em; perspective: 800px; }
+
+.role-card {
+  display: inline-block;
+  padding: 0.16em 0.5em 0.24em;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+  line-height: 1.1;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.hero-lead { margin-top: 32px; font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.45; }
+
+@media (min-width: 768px) {
+  .hero-visual { position: absolute; inset: 0; height: auto; }
+  .hero-word {
+    left: auto;
+    right: max(24px, calc((100vw - 1280px) / 2 + 24px));
+    bottom: 6vh;
+    font-size: clamp(6rem, 11.5vw, 14rem);
+  }
+  .hero-inner { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; min-height: 100dvh; padding: 140px 24px 96px; }
+  .hero-copy { max-width: 620px; }
+}
+
+/* Timeline */
+.timeline-heading { font-size: clamp(2.75rem, 5vw, 5rem); }
+.tl-title { margin-top: 8px; font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 500; line-height: 1.15; }
+.tl-glow { display: none; }
+.tl-meta-row { display: none; }
+
+@media (min-width: 768px) {
+  .timeline-inner { grid-template-columns: 7fr 5fr; }
+  .roller { font-size: min(22vw, 34vh, 20rem); }
+  .timeline-year-box { margin-top: 16px; }
+  .tl-meta-row { display: flex; align-items: center; gap: 24px; margin-top: 12px; }
+  .tl-meta-row .tl-current-range { margin-top: 0; }
+  .tl-counter { font-size: 13px; letter-spacing: 0.14em; font-variant-numeric: tabular-nums; }
+  .tl-list { position: relative; }
+  .tl-glow {
+    display: block;
+    position: absolute;
+    left: -7.5px;
+    top: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 5px rgba(255, 169, 70, 0.18), 0 0 18px 4px rgba(255, 169, 70, 0.4);
+    z-index: 1;
+  }
+  .tl-entry.is-active .tl-dot { background: var(--bg); border-color: var(--accent); transform: none; }
+  .timeline.is-pinned .tl-entry > *:not(.tl-dot) { opacity: 0.16; }
+  .timeline.is-pinned .tl-entry.is-active > *:not(.tl-dot) { opacity: 1; }
+}
+
+/* Museum doors */
+.museum-progress { display: none; }
+.doors { display: flex; flex-direction: column; gap: 20px; margin-top: 48px; }
+
+.doorway {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 160px 160px 20px 20px;
+  background: color-mix(in srgb, var(--green) 62%, #000);
+  perspective: 1600px;
+}
+
+.doorway-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 75% 60% at 50% 62%, rgba(255, 169, 70, 0.24), rgba(255, 255, 235, 0.07) 45%, transparent 75%);
+  opacity: 0;
+  transition: opacity 900ms var(--ease);
+}
+
+.doorway.is-open .doorway-light { opacity: 1; }
+
+.plaque { position: relative; padding: 112px 16px 16px; }
+
+.plaque-card {
+  padding: 28px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+}
+
+.plaque-no, .door-no {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #1A1A1A;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.plaque-title { margin-top: 14px; font-size: clamp(1.6rem, 2.2vw, 2.2rem); font-weight: 500; line-height: 1.1; }
+.plaque-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+.plaque-label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.plaque-grid dd { font-size: 16px; line-height: 1.5; }
+
+.door-leaf {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 32px 24px;
+  text-align: left;
+  border-radius: inherit;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 1100ms var(--ease), background-color 300ms var(--ease);
+}
+
+.door-leaf:hover { background: color-mix(in srgb, var(--card) 94%, #000); }
+.door-leaf:focus-visible { outline: 2px solid var(--accent); outline-offset: -8px; }
+.doorway.is-open .door-leaf { transform: rotateY(-104deg); pointer-events: none; }
+
+.door-title { font-family: "EB Garamond", serif; font-size: clamp(1.6rem, 2.4vw, 2.5rem); font-weight: 500; line-height: 1.05; }
+.door-knob { position: absolute; right: 18px; top: 56%; width: 10px; height: 10px; border-radius: 50%; background: var(--text); opacity: 0.35; }
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .museum-panel { height: 100vh; overflow: hidden; }
+  .museum-inner { height: 100%; display: flex; flex-direction: column; justify-content: center; padding-top: 96px; padding-bottom: 32px; }
+  .museum-progress { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; padding-bottom: 12px; }
+  .museum-count { font-size: 13px; letter-spacing: 0.12em; font-variant-numeric: tabular-nums; }
+  .museum-bar { display: block; width: 160px; height: 2px; border-radius: 2px; background: rgba(255, 255, 235, 0.2); overflow: hidden; }
+  .museum-bar-fill { display: block; height: 100%; background: var(--accent); transform-origin: left center; transform: scaleX(0); }
+  .doors { flex-direction: row; gap: 16px; height: clamp(440px, calc(100vh - 280px), 640px); margin-top: 32px; }
+  .doorway { flex: 1 1 0; min-width: 0; border-radius: 200px 200px 20px 20px; transition: flex-grow 900ms var(--ease); }
+  .doorway.is-open { flex-grow: 3.2; }
+  .plaque {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: calc((min(100vw, 1280px) - 96px) * 0.516);
+    display: flex;
+    align-items: flex-end;
+    padding: 88px 24px 24px;
+  }
+  .plaque-card { width: 100%; padding: 28px 32px; }
+  .plaque-grid { grid-template-columns: 1fr 1fr; gap: 16px 28px; }
+  .plaque-grid dd { font-size: 15px; }
+  .door-title { font-size: clamp(1.4rem, 2vw, 2.25rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .door-leaf, .doorway-light { display: none; }
+  .doors { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+}
+
+/* Skills */
+.skill-label { font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.skill-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+.chip {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.2;
+  transition: background-color 300ms var(--ease);
+}
+
+.chip:hover { background: var(--card); }
+
+@media (min-width: 768px) {
+  .skill-group { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
+  .skill-chips { margin-top: 0; }
+  .skill-label { padding-top: 14px; }
+}
+
+/* Achievements */
+.stat-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 64px; }
+@media (min-width: 900px) { .stat-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  padding: 40px 32px;
+  border-radius: 2rem;
+  border: 1px solid var(--line);
+  background: var(--card);
+  transition: background-color 300ms var(--ease);
+}
+
+.stat-tile:hover { background: color-mix(in srgb, var(--card) 94%, #000); }
+
+.stat-figure {
+  font-family: "EB Garamond", serif;
+  font-size: clamp(4rem, 7vw, 6.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.stat-small { font-size: 0.34em; letter-spacing: 0; }
+.stat-rest { display: block; margin-top: 0.3em; font-size: 0.34em; letter-spacing: 0; line-height: 1.1; }
+.stat-caption { margin-top: 32px; font-size: 17px; line-height: 1.45; }
+
+/* Contact */
+.contact { padding-bottom: 200px; }
+
+.contact-statement {
+  margin-top: 24px;
+  max-width: 1100px;
+  font-size: clamp(3rem, 8.5vw, 8rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}

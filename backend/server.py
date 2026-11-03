@@ -1,7 +1,6 @@
 import asyncio
 from contextlib import suppress
 from fastapi import FastAPI, APIRouter, Query
-from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -86,11 +85,6 @@ async def get_status_checks(limit: int = Query(20, ge=1, le=100)):
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
-
-@api_router.get("/downloads/screenshots")
-async def download_screenshots():
-    path = ROOT_DIR / "downloads" / "dhairya-portfolio-screenshots.zip"
-    return FileResponse(path, media_type="application/zip", filename=path.name)
 
 # Include the router in the main app
 app.include_router(api_router)

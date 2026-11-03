@@ -1,5 +1,6 @@
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "@/creative.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "@/pages/Home";
 import Whisper from "@/pages/Whisper";
 import Story from "@/pages/Story";
@@ -19,7 +20,8 @@ function App() {
       <ThemeCord />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/whisper" element={<Whisper />} />
+        <Route path="/wispr" element={<Whisper />} />
+        <Route path="/whisper" element={<Navigate to="/wispr" replace />} />
         <Route path="/museum-of-failures/:id" element={<StoryRoute />} />
       </Routes>
     </BrowserRouter>

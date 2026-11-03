@@ -84,7 +84,19 @@ export const skills = [
   { group: "Quality and delivery", items: "Jest, mocking, Docker, Jenkins, Grafana, Git, Jira, Agile" },
 ];
 
-export const achievements = [
-  "AIR 18, CUET PG DU MCA (2023); 99.37 percentile, Naukri Campus Young Turks (2024)",
-  "300+ problems solved across LeetCode, GFG, CodeStudio; 5 LeetCode badges",
+export const achievementTiles = [
+  { lead: "AIR ", figure: "18", count: false, rest: "", caption: "CUET PG DU MCA (2023)" },
+  { lead: "", figure: "99.37", count: true, rest: " percentile", caption: "Naukri Campus Young Turks (2024)" },
+  { lead: "", figure: "300+", count: true, rest: " problems solved", caption: "across LeetCode, GFG, CodeStudio; 5 LeetCode badges" },
 ];
+
+export const roles = ["Full-stack engineer", "Backend engineer", "Builder of agentic AI systems"];
+
+export const links = {
+  resume: "",
+  linkedin: "https://www.linkedin.com/in/dhairya-kaithwar-570033133",
+  github: "https://github.com/DhairyaKaithwar",
+  email: "mailto:dhairya9d@gmail.com",
+};
+
+export const contact = { statement: "Let's build something reliable together" };

@@ -37,7 +37,7 @@ export const useCountUp = (ref) => {
         io.unobserve(target);
         const final = target.dataset.count;
         const value = parseFloat(final.replace(/,/g, ""));
-        const decimals = final.includes(".") ? 1 : 0;
+        const decimals = (final.split(".")[1] || "").replace(/\D/g, "").length;
         const suffix = final.replace(/[\d.,]/g, "");
         const o = { v: 0 };
         target.style.minWidth = `${target.offsetWidth}px`;

@@ -1,13 +1,10 @@
 import { useCallback, useRef, useState } from "react";
 import { useReveal, useCountUp } from "@/lib/smoothScroll";
-import { Num } from "@/components/Num";
 import { Hero } from "@/sections/Hero";
 import { Intro } from "@/components/Intro";
 import { Timeline } from "@/sections/Timeline";
 import { MuseumOfFailures } from "@/sections/MuseumOfFailures";
-import { SimpleSection } from "@/sections/SimpleSection";
-import { Placeholder } from "@/components/Placeholder";
-import { skills, achievements } from "@/content";
+import { Skills, Achievements, Contact } from "@/sections/Closing";
 
 const skipIntro = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -23,24 +20,9 @@ export default function Home() {
       <Hero ready={ready} />
       <Timeline />
       <MuseumOfFailures />
-      <SimpleSection id="skills" title="Skills">
-        <dl className="flex flex-col gap-6">
-          {skills.map((s) => (
-            <div key={s.group} data-testid={`skills-${s.group.split(" ")[0].toLowerCase()}`}>
-              <dt className="text-sm font-medium muted">{s.group}</dt>
-              <dd className="mt-1">{s.items}</dd>
-            </div>
-          ))}
-        </dl>
-      </SimpleSection>
-      <SimpleSection id="achievements" title="Achievements">
-        <ul className="flex flex-col gap-3 list-disc pl-5" data-testid="achievements-list">
-          {achievements.map((a) => <li key={a}><Num text={a} /></li>)}
-        </ul>
-      </SimpleSection>
-      <SimpleSection id="contact" title="Contact">
-        <Placeholder testId="contact-placeholder">contact content</Placeholder>
-      </SimpleSection>
+      <Skills />
+      <Achievements />
+      <Contact />
     </main>
   );
 }

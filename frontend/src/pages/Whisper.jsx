@@ -10,7 +10,7 @@ export default function Whisper() {
   return (
     <main ref={ref} data-testid="whisper-page" className="section min-h-[100dvh]">
       <div data-reveal>
-        <Placeholder testId="whisper-placeholder">/whisper page content</Placeholder>
+        <Placeholder testId="whisper-placeholder">/wispr page content</Placeholder>
       </div>
       <div data-reveal data-testid="whisper-video" className="video-slot mt-16">
         <Placeholder>video embed</Placeholder>
