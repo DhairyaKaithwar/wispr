@@ -83,7 +83,8 @@ export const Intro = ({ onDone }) => {
     window.scrollTo(0, 0);
     document.documentElement.style.overflow = "hidden";
     const raf = requestAnimationFrame(() => window.__lenis?.stop());
-    document.fonts.ready.then(() => {
+    const fonts = Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1500))]);
+    fonts.then(() => {
       if (cancelled) return;
       ctx = gsap.context(() => { tl.current = buildTimeline(root.current, finish); }, root);
     });
@@ -98,9 +99,9 @@ export const Intro = ({ onDone }) => {
   const skip = () => (tl.current ? tl.current.progress(1) : finish());
 
   return (
-    <div ref={root} data-testid="intro-overlay" className="intro" aria-hidden="true">
-      <div className="intro-bg" />
-      <div className="intro-stage">
+    <div ref={root} data-testid="intro-overlay" className="intro">
+      <div className="intro-bg" aria-hidden="true" />
+      <div className="intro-stage" aria-hidden="true">
         <div className="intro-pill" data-testid="intro-pill">
           {BARS.map((b, i) => <span key={i} className="intro-bar" style={{ height: `${b * 18}px` }} />)}
         </div>

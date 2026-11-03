@@ -11,13 +11,13 @@ const smooth = (a, b, v) => {
 const layoutFor = (w, h, ih) => {
   const mobile = w < 768;
   return mobile
-    ? { cell: 4, scale: (0.56 * h) / ih, sx: 0.5 * w, sy: 0.27 * h, r0: 0.18 * h, r1: 0.36 * h, cutY: 0.5 * h }
+    ? { cell: 4, scale: (0.56 * h) / ih, sx: 0.5 * w, sy: 0.29 * h, r0: 0.18 * h, r1: 0.36 * h, cutY: 0.5 * h }
     : { cell: 7, scale: (1.02 * h) / ih, sx: 0.7 * w, sy: 0.5 * h, r0: 0.3 * h, r1: 0.62 * h, cutY: 1.2 * h };
 };
 
 const buildDots = (img, w, h, titleTop) => {
   const L = layoutFor(w, h, img.height);
-  if (titleTop) L.cutY = titleTop + 0.05 * h;
+  if (titleTop) L.cutY = titleTop + (w < 768 ? -0.01 : 0.05) * h;
   const cols = Math.ceil(w / L.cell);
   const rows = Math.ceil(h / L.cell);
   const left = L.sx - FOCAL.x * img.width * L.scale;
@@ -38,7 +38,8 @@ const buildDots = (img, w, h, titleTop) => {
       const y = j * L.cell + L.cell / 2;
       const dist = Math.hypot(x - L.sx, y - L.sy);
       const weight = (1 - smooth(L.r0, L.r1, dist)) * (1 - smooth(L.cutY - 0.08 * h, L.cutY, y));
-      const r = (L.cell / 2) * 1.08 * smooth(0.3, 0.92, 1 - lum) * weight;
+      const blue = smooth(0.07, 0.13, (px[k + 2] - px[k]) / 255);
+      const r = (L.cell / 2) * 1.08 * smooth(0.3, 0.92, 1 - lum) * weight * (1 - blue);
       if (r < 0.35) continue;
       dots.push({ x, y, r, d: (dist / L.r1) * 0.55 + Math.random() * 0.12 });
     }
