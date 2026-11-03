@@ -7,8 +7,9 @@ export const YearRoller = ({ digits }) => {
   const ref = useRef(null);
   useEffect(() => {
     const strips = ref.current.querySelectorAll(".roller-strip");
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     digits.split("").forEach((d, i) => {
-      gsap.to(strips[i], { yPercent: -Number(d) * 10, duration: 0.9, ease: "soft", delay: i * 0.09, overwrite: true });
+      gsap.to(strips[i], { yPercent: -Number(d) * 10, duration: still ? 0 : 0.9, ease: "soft", delay: still ? 0 : i * 0.09, overwrite: true });
     });
   }, [digits]);
 

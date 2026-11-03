@@ -16,7 +16,7 @@ export const Hero = ({ ready }) => {
   useEffect(() => {
     if (!ready || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = gsap.context(() => {
-      gsap.from(".hero-in", { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.9, ease: "soft", stagger: 0.08, delay: 0.2, clearProps: "filter" });
+      gsap.from(".hero-in", { y: 24, opacity: 0, duration: 0.9, ease: "soft", stagger: 0.08, delay: 0.2 });
     }, ref);
     return () => ctx.revert();
   }, [ready]);

@@ -74,7 +74,7 @@ export const Halftone = ({ play }) => {
       ctx.fill();
     };
     const build = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.5 : 2);
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
       if (!w || !h) return;

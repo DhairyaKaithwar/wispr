@@ -253,10 +253,10 @@ h1, h2, h3 {
   color: #1A1A1A;
   font-weight: 500;
   font-size: 16px;
-  transition: transform 500ms var(--ease);
+  transition: background-color 300ms var(--ease);
 }
 
-.pill:active { transform: scale(0.98); }
+.pill:hover { background: #E8C6FF; }
 
 .pill-icon {
   display: flex;
@@ -266,17 +266,17 @@ h1, h2, h3 {
   height: 36px;
   border-radius: 999px;
   background: rgba(26, 26, 26, 0.06);
-  transition: transform 500ms var(--ease);
 }
-
-.pill:hover .pill-icon { transform: translate(4px, -1px) scale(1.05); }
 
 .bezel {
   border-radius: 2rem;
   border: 1px solid var(--line);
   background: var(--card);
   color: var(--text);
+  transition: background-color 300ms var(--ease);
 }
+
+.bezel:hover { background: color-mix(in srgb, var(--card) 94%, #000); }
 
 .bezel-core {
   height: 100%;
@@ -495,10 +495,9 @@ html.lenis, html.lenis body { height: auto; }
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 1px var(--line);
-  transition: transform 300ms var(--ease);
+  transition: background-color 300ms var(--ease);
 }
 
-.cord:hover .cord-knob { transform: scale(1.15); }
 .cord:focus-visible { outline: none; }
 .cord:focus-visible .cord-knob { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--text); }
 
@@ -536,4 +535,15 @@ html.lenis, html.lenis body { height: auto; }
   .timeline.is-pinned .timeline-inner { height: 100%; padding-top: 140px; padding-bottom: 0; }
   .timeline.is-pinned .tl-entry > *:not(.tl-dot) { opacity: 0.3; transition: opacity 500ms var(--ease); }
   .timeline.is-pinned .tl-entry.is-active > *:not(.tl-dot) { opacity: 1; }
+}
+
+.count { display: inline-block; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

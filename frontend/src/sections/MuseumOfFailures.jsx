@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Bezel, Eyebrow, PillButton } from "@/components/Soft";
 import { exhibits } from "@/content";
+import { Num } from "@/components/Num";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,7 +42,7 @@ const Exhibit = ({ ex, n }) => (
       {fields.map((f) => (
         <div key={f} data-testid={`museum-exhibit-${n}-${f.toLowerCase()}`}>
           <dt className="text-sm font-medium muted">{f}</dt>
-          <dd className="mt-1">{ex[f]}</dd>
+          <dd className="mt-1"><Num text={ex[f]} /></dd>
         </div>
       ))}
     </dl>

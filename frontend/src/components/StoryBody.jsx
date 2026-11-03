@@ -1,3 +1,5 @@
+import { Num } from "@/components/Num";
+
 const parse = (body) => {
   const blocks = [];
   body.split("\n").forEach((line) => {
@@ -20,10 +22,10 @@ const Block = ({ b }) => {
   if (b.type === "ul")
     return (
       <ul className="list-disc pl-5 flex flex-col gap-2">
-        {b.items.map((i) => <li key={i}>{i}</li>)}
+        {b.items.map((i) => <li key={i}><Num text={i} /></li>)}
       </ul>
     );
-  return <p>{b.text}</p>;
+  return <p><Num text={b.text} /></p>;
 };
 
 export const StoryBody = ({ body }) => (

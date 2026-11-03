@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
-import { useReveal } from "@/lib/smoothScroll";
+import { useReveal, useCountUp } from "@/lib/smoothScroll";
+import { Num } from "@/components/Num";
 import { Hero } from "@/sections/Hero";
 import { Intro } from "@/components/Intro";
 import { Timeline } from "@/sections/Timeline";
@@ -15,6 +16,7 @@ export default function Home() {
   const [ready, setReady] = useState(skipIntro);
   const onIntroDone = useCallback(() => setReady(true), []);
   useReveal(ref);
+  useCountUp(ref);
   return (
     <main ref={ref} data-testid="home-page">
       {!ready && <Intro onDone={onIntroDone} />}
@@ -33,7 +35,7 @@ export default function Home() {
       </SimpleSection>
       <SimpleSection id="achievements" title="Achievements">
         <ul className="flex flex-col gap-3 list-disc pl-5" data-testid="achievements-list">
-          {achievements.map((a) => <li key={a}>{a}</li>)}
+          {achievements.map((a) => <li key={a}><Num text={a} /></li>)}
         </ul>
       </SimpleSection>
       <SimpleSection id="contact" title="Contact">

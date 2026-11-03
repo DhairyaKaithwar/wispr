@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Placeholder } from "@/components/Placeholder";
 import { YearRoller } from "@/components/YearRoller";
 import { timeline } from "@/content";
+import { Num } from "@/components/Num";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,7 +35,7 @@ const Entry = ({ t, i, active }) => (
     {t.meta && <p className="mt-2 muted">{t.meta}</p>}
     {t.details.length > 0 && (
       <ul className="mt-4 flex flex-col gap-2 list-disc pl-5">
-        {t.details.map((d) => <li key={d}>{d}</li>)}
+        {t.details.map((d) => <li key={d}><Num text={d} /></li>)}
       </ul>
     )}
     {t.placeholder && <p className="mt-4"><Placeholder>{t.placeholder}</Placeholder></p>}

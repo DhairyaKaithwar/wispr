@@ -26,6 +26,41 @@ export const useSmoothScroll = () => {
   }, []);
 };
 
+export const useCountUp = (ref) => {
+  useEffect(() => {
+    if (reducedMotion()) return;
+    const els = ref.current.querySelectorAll("[data-count]");
+    const tweens = [];
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(({ isIntersecting, target }) => {
+        if (!isIntersecting) return;
+        io.unobserve(target);
+        const final = target.dataset.count;
+        const value = parseFloat(final.replace(/,/g, ""));
+        const decimals = final.includes(".") ? 1 : 0;
+        const suffix = final.replace(/[\d.,]/g, "");
+        const o = { v: 0 };
+        target.style.minWidth = `${target.offsetWidth}px`;
+        tweens.push(gsap.to(o, {
+          v: value,
+          duration: 1.2,
+          ease: "power2.out",
+          onUpdate: () => {
+            target.textContent = o.v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+          },
+          onComplete: () => { target.textContent = final; },
+        }));
+      });
+    }, { threshold: 0.6 });
+    els.forEach((el) => io.observe(el));
+    return () => {
+      io.disconnect();
+      tweens.forEach((t) => t.kill());
+      els.forEach((el) => { el.textContent = el.dataset.count; });
+    };
+  }, [ref]);
+};
+
 export const useReveal = (ref) => {
   useEffect(() => {
     if (reducedMotion()) return;
