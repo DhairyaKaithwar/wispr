@@ -71,6 +71,14 @@ h1, h2, h3 {
 }
 
 .text-measure { max-width: var(--text-width); }
+
+.timeline-year {
+  font-family: "EB Garamond", serif;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
 .muted { color: var(--muted); }
 
 .eyebrow {

@@ -1,5 +1,5 @@
-import { Placeholder } from "@/components/Placeholder";
 import { PillButton, Eyebrow } from "@/components/Soft";
+import { hero } from "@/content";
 
 const links = [
   { label: "Resume", id: "resume", note: "resume link" },
@@ -14,8 +14,11 @@ export const Hero = () => (
     <h1 data-reveal data-testid="hero-name" className="hero-title mt-8">
       Dhairya
     </h1>
-    <p data-reveal data-testid="hero-positioning" className="mt-8 text-measure text-base md:text-lg muted">
-      <Placeholder>one-line positioning</Placeholder>
+    <p data-reveal data-testid="hero-positioning" className="mt-8 text-measure text-lg md:text-2xl">
+      {hero.positioning}
+    </p>
+    <p data-reveal data-testid="hero-subline" className="mt-4 text-measure text-base md:text-lg muted">
+      {hero.subline}
     </p>
     <div data-reveal className="mt-12 flex flex-wrap gap-4">
       {links.map((l) => (
