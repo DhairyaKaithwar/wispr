@@ -1,18 +1,25 @@
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useReveal } from "@/lib/smoothScroll";
 import { Hero } from "@/sections/Hero";
+import { Intro } from "@/components/Intro";
 import { Timeline } from "@/sections/Timeline";
 import { MuseumOfFailures } from "@/sections/MuseumOfFailures";
 import { SimpleSection } from "@/sections/SimpleSection";
 import { Placeholder } from "@/components/Placeholder";
 import { skills, achievements } from "@/content";
 
+const skipIntro = () =>
+  sessionStorage.getItem("introPlayed") === "1" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export default function Home() {
   const ref = useRef(null);
+  const [ready, setReady] = useState(skipIntro);
+  const onIntroDone = useCallback(() => setReady(true), []);
   useReveal(ref);
   return (
     <main ref={ref} data-testid="home-page">
-      <Hero />
+      {!ready && <Intro onDone={onIntroDone} />}
+      <Hero ready={ready} />
       <Timeline />
       <MuseumOfFailures />
       <SimpleSection id="skills" title="Skills">

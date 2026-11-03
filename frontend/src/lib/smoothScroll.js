@@ -13,6 +13,8 @@ export const useSmoothScroll = () => {
   useEffect(() => {
     if (reducedMotion()) return;
     const lenis = new Lenis({ anchors: { offset: -24 } });
+    window.__lenis = lenis;
+    if (document.documentElement.style.overflow === "hidden") lenis.stop();
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
