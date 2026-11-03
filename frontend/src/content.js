@@ -6,6 +6,8 @@ export const hero = {
 export const timeline = [
   {
     year: "2025 → now",
+    digits: "2025",
+    range: "July 2025 – present",
     entry: "SDE 1, Digicraft.AI",
     meta: "Software Development Engineer 1, Digicraft.AI, New Delhi (July 2025 – present)",
     details: [
@@ -17,6 +19,8 @@ export const timeline = [
   },
   {
     year: "2025",
+    digits: "2025",
+    range: "January – July 2025",
     entry: "Software Engineer Intern, NIC (Jan–Jul)",
     meta: "Software Engineer Intern, National Informatics Centre, New Delhi (January – July 2025)",
     details: [
@@ -26,11 +30,15 @@ export const timeline = [
   },
   {
     year: "2023",
+    digits: "2023",
+    range: "2023–2025",
     entry: "MCA, University of Delhi (2023–2025)",
     details: ["AIR 18 in CUET PG DU MCA"],
   },
   {
     year: "2020",
+    digits: "2020",
+    range: "2020–2023",
     entry: "BSc Mathematics, CSJM University, Kanpur (2020–2023)",
     details: [],
     placeholder: "start of the timeline line, in your own words",

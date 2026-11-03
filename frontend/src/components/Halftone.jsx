@@ -77,6 +77,7 @@ export const Halftone = ({ play }) => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
+      if (!w || !h) return;
       st.w = w;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
