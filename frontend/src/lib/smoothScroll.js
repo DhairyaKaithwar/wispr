@@ -12,7 +12,7 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 export const useSmoothScroll = () => {
   useEffect(() => {
     if (reducedMotion()) return;
-    const lenis = new Lenis({ anchors: { offset: -24 } });
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, anchors: { offset: -24 } });
     window.__lenis = lenis;
     if (document.documentElement.style.overflow === "hidden") lenis.stop();
     lenis.on("scroll", ScrollTrigger.update);
@@ -30,16 +30,12 @@ export const useReveal = (ref) => {
   useEffect(() => {
     if (reducedMotion()) return;
     const ctx = gsap.context(() => {
-      gsap.utils.toArray("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 64,
-          filter: "blur(12px)",
-          duration: 0.9,
-          ease: "soft",
-          clearProps: "filter",
-          scrollTrigger: { trigger: el, start: "top 90%" },
-        });
+      const items = gsap.utils.toArray("[data-reveal]");
+      gsap.set(items, { opacity: 0, y: 16 });
+      ScrollTrigger.batch(items, {
+        start: "top 92%",
+        once: true,
+        onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.32, ease: "power2.out", stagger: 0.06 }),
       });
     }, ref);
     return () => ctx.revert();
