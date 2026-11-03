@@ -20,6 +20,7 @@ Light: bg #FFFFEB, cards #E4E4D0, text #1A1A1A, muted #666666. Dark: bg #141412,
 /museum-of-failures/1-4 : full stories. /whisper : video placeholder, Voice Build Log, setup item (not in nav).
 
 ## Implemented
+- Creative pass (Nov 2026): hero greeting + flipping role card, faint giant "Portfolio." behind halftone, real links (resume link still missing), natural dark-mode portrait; timeline 7/5 grid with bigger roller, 01/04 counter, glowing travelling dot; Museum doors (pinned desktop, IO/tap on mobile, plaques when reduced motion); skill chips; achievement stat tiles (99.37 + 300+ count, AIR 18 static); contact statement + Email/LinkedIn; body 18/17px; secondary text colour; eyebrows removed; /wispr route (/WISPR, /whisper redirect); screenshot download removed. Styles in src/creative.css.
 - Hero, timeline, museum cards, skills, achievements content (content.js); stories (stories.js)
 - Intro: listening pill → Dhairya drops → scramble to Portfolio → wipe + FLIP to hero title → halftone assembles
 

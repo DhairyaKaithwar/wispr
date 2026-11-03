@@ -11,7 +11,7 @@ export const RoleFlip = ({ roles }) => {
       const next = roles[(k + 1) % roles.length];
       tl.to(el, { rotateX: -90, opacity: 0.4, duration: 0.35, ease: "power2.in" }, "+=1.65")
         .call(() => { el.textContent = next; })
-        .fromTo(el, { rotateX: 90, opacity: 0.4 }, { rotateX: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)" });
+        .fromTo(el, { rotateX: 90, opacity: 0.4 }, { rotateX: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: false });
     });
     return () => {
       tl.kill();

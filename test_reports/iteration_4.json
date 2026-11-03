@@ -1,0 +1,30 @@
+{
+  "summary": "Full Creative Pass regression on desktop 1440x900, mobile 390x844, dark mode and reduced motion. Backend: 5/5 (download endpoint removed -> 404, /downloads/index.html serves SPA, legacy zip not served, SPA routes 200). Frontend: hero greeting, role cycling, links, resume preventDefault, intro + Skip handoff to faint 'Portfolio.' word, timeline pin/counter/year roller/glow dot, museum pinned doors/counter/leaf-click/story links, mobile unpinned timeline + IO/tap doors, skills chips, achievements count-ups, contact, /wispr /WISPR /whisper redirect, nav without Wispr, dark mode, reduced motion all pass. One real bug was found and fixed: the RoleFlip card was hidden (rotateX 90, height 0) for ~1.5s at mount and on every timeline repeat, so 'Full-stack engineer' was effectively never visible.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "RoleFlip", "issue": "FIXED by testing agent: gsap fromTo inside repeat:-1 timeline used default immediateRender:true, so the card snapped to rotateX:90/opacity .4 at mount and at each repeat; first role 'Full-stack engineer' was invisible ~1.5s per 7.5s cycle (10/32 samples had height 0). Added immediateRender:false; re-verified 4/41 samples mid-flip only, all three roles visible ~2.5s each.", "selector": "[data-testid=hero-role-card]", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Hero mobile 390px", "issues": ["Giant faint 'Portfolio.' word overflows the viewport (rect left -5 to right 533 on 390 width) and reads as 'Portfol' with the orange dot cut off. No horizontal scroll (scrollWidth 390), but the word is clipped. Consider scaling it to fit on mobile if the full word is wanted."]},
+      {"screen": "Museum (desktop pinned)", "issues": ["Counter shows '01 / 04' before any door is open (count = max(1, active+1)). This is cosmetic only."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/test_portfolio_routes.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Optional: fit the mobile hero 'Portfolio.' background word inside the 390px viewport (currently clipped).",
+    "Note: Timeline entry 4 still renders '[PLACEHOLDER: start of the timeline line, in your own words]'. This is not an eyebrow placeholder, so it is probably intended, but confirm."
+  ],
+  "critical_code_review_comments": [
+    "RoleFlip: fromTo in a repeating timeline needs immediateRender:false (fixed).",
+    "Num.jsx: the PATTERN regex is tested again with .test on every split part. This works, but checking whether the index is odd would be simpler.",
+    "Hero resume link: PillButton renders href='#' with preventDefault and title 'Placeholder: Resume link missing'. This is fine until the URL is provided."
+  ],
+  "updated_files": ["/app/frontend/src/components/RoleFlip.jsx", "/app/backend/tests/test_portfolio_routes.py (new)", "/app/backend/tests/test_downloads.py (deleted, obsolete: feature removed)"],
+  "success_rate": {"backend": "100% (5/5)", "frontend": "100% after RoleFlip fix (13/13 feature checks)"},
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Use window.__lenis.scrollTo(y,{immediate:true}). Timeline pin length = 4*0.7*vh and museum = 3.2*vh from section top; museum door N opens at progress LEAD 0.08 + (N-1)/4*0.92. Role card cycle = 2.5s per role; sample bounding height to detect visibility. Reduced-motion context: page.context.browser.new_context(reduced_motion='reduce'). Run pytest from /app/backend (pytest.ini there)."
+}
