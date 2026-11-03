@@ -1,46 +1,92 @@
+:root {
+  --bg: #FFFFEB;
+  --card: #E4E4D0;
+  --text: #1A1A1A;
+  --muted: #666666;
+  --border: rgba(26, 26, 26, 0.12);
+  --lavender: #F0D7FF;
+  --green: #034F46;
+  --cream: #FFFFEB;
+  --accent: #FFA946;
+  --page-width: 1280px;
+  --text-width: 720px;
+}
+
+.dark {
+  --bg: #141412;
+  --card: #22221F;
+  --text: #FFFFEB;
+  --muted: #A8A89A;
+  --border: rgba(255, 255, 235, 0.12);
+}
+
 body {
-  background: #fafaf9;
-  color: #1c1917;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Figtree", sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: "EB Garamond", serif;
 }
 
 .section {
-  max-width: 64rem;
+  max-width: var(--page-width);
   margin: 0 auto;
-  padding: 6rem 1.5rem;
+  padding: 128px 24px;
 }
 
 .section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.text-measure {
+  max-width: var(--text-width);
+}
+
+.muted {
+  color: var(--muted);
 }
 
 .btn {
-  padding: 0.6rem 1.25rem;
-  border: 1px solid #1c1917;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  transition: background-color 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 12px;
+  background: var(--lavender);
+  color: #1A1A1A;
+  font-weight: 500;
+  font-size: 16px;
+  transition: opacity 0.2s;
 }
 
 .btn:hover {
-  background: #1c1917;
-  color: #fafaf9;
+  opacity: 0.85;
 }
 
 .card {
-  border: 1px solid #d6d3d1;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.panel-green {
+  background: var(--green);
+  color: var(--cream);
 }
 
 .placeholder {
   display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border: 1px dashed #b45309;
-  background: #fef3c7;
-  color: #92400e;
-  font-family: ui-monospace, Menlo, monospace;
-  font-size: 0.85rem;
+  padding: 2px 8px;
+  border: 1px dashed var(--accent);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 html.lenis, html.lenis body { height: auto; }
