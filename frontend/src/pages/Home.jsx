@@ -8,8 +8,7 @@ import { SimpleSection } from "@/sections/SimpleSection";
 import { Placeholder } from "@/components/Placeholder";
 import { skills, achievements } from "@/content";
 
-const skipIntro = () =>
-  sessionStorage.getItem("introPlayed") === "1" || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const skipIntro = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export default function Home() {
   const ref = useRef(null);

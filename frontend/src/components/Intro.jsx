@@ -81,7 +81,6 @@ export const Intro = ({ onDone }) => {
     done.current = true;
     window.__lenis?.start();
     document.documentElement.style.overflow = "";
-    sessionStorage.setItem("introPlayed", "1");
     onDone();
   };
 
